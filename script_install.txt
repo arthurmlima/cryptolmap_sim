@@ -1,0 +1,24 @@
+winget install --id Git.Git -e --source winget
+
+git clone https://x-token-auth:ATCTT3xFfGN0nhrqAVhKNxyc4SwtB5RR-v4WtMXn4Z9nBe9Qw7eEfbBLEpFzIfRjtr5Swa7mEML2ORWr_dV_3QUvY7744f4QlQTp6EGGtn-Te7BIyimRxLSTHMC93i0rioSMbO4hrEAhzTu6LPUnZHgmc9ar9JFSRe10ICrOJXSwE-AQmiKCQGI=B5D68C5D@bitbucket.org/embdcrypto/suplogmap.git
+
+##instalar o msys2
+
+pacman -S mingw-w64-x86_64-gcc
+
+Xcopy C:\Users\%username%\suplogmap\Install\mingw-w64-x86_64-crypto++-8.2.0-2-any.pkg.tar.xz C:\msys64\home\%username%  
+
+pacman -U --needed --noconfirm  mingw-w64-x86_64-crypto++-8.2.0-2-any.pkg.tar.xz
+
+#add no PATH "C:\msys64\mingw64\bin"
+
+#testa para ver se funciona a biblioteca de criptografia
+cd Teste
+g++ teste.cpp -lcryptopp
+./a.exe
+
+#volta para a pasta principal git 
+cd ..
+
+#roda para ver se funciona o mapa logistico
+g++ -DDEBUG -DFLOAT_DIFF -DFLOAT_PERM -DMU_PERM=128 -DMU_DIFF=256 -DALT=512 -DLAR=512 -DCEXPR="((long int)(v[i]*POW(10,5)))%256" -DDT=10 main.cpp -lcryptopp ; ./a.exe
