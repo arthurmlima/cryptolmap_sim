@@ -21,7 +21,8 @@ perm_prec* logmap_perm(int dt, perm_prec x);
 diff_prec* logmap_diff(int dt, diff_prec x);
 uint8_t* permutation(perm_prec* v);
 int cmp(const void* a, const void* b);
-void print_img(uint8_t *image_impr, const char *filen);
+template <typename T>
+void print_img(T *image_impr, const char *filen);
 uint8_t* lmapdc(diff_prec* v);
 uint8_t* cipherxor(uint8_t* permuted_image, uint8_t* precipher);
 
@@ -64,7 +65,7 @@ printf("******************************************* DEBUG **********************
     for (int i = 0; i < 32; i++)
     {
         uint8_t hd = digest[i];
-        printf("%X",hd);
+        printf("%0.2X",hd);
     }
      printf("\n\n");
 
@@ -105,13 +106,17 @@ uint8_t* cipherxor(uint8_t* permuted_image, uint8_t* precipher)
     {
            cipher_image[i] =  permuted_image[i] ^ precipher[i];
     }
+    print_img(precipher, "Text/precipher.image");
     return cipher_image;
 }
 
 uint8_t* permutation(perm_prec* v)
 {
        str* to_ord = (str *)malloc(BSIZE * sizeof(str));                   // Allocate memory for the array
+       int* sorted_index =  (int *)malloc(BSIZE * sizeof(int));            // Allocate memory for the array
+
        if (to_ord == NULL) {printf("Error! Low memory\n");}
+       if (sorted_index == NULL) {printf("Error! Low memory\n");}
 
        uint8_t* img = (uint8_t *)malloc(BSIZE * sizeof(uint8_t));          // Allocate memory for the array
        if (img == NULL) {printf("Error! Low memory\n");}
@@ -124,8 +129,10 @@ uint8_t* permutation(perm_prec* v)
        qsort(to_ord, BSIZE, sizeof(to_ord[0]), cmp);
        for (int i = 0; i < BSIZE; i++)
        {
+            sorted_index[i] = to_ord[i].index;
             img[i] = image[to_ord[i].index];
        }
+       print_img(sorted_index, "Text/pixel_position.image");
        return  img;
 }
 
@@ -205,7 +212,8 @@ int cmp(const void* a, const void* b)
         return 0;
 }
 
-void print_img(uint8_t *image_impr, const char *filen)
+template <typename T>
+void print_img(T *image_impr, const char *filen)
 {
     std::ofstream outputFile(filen);                                       // Open the file for writing
     if (outputFile.is_open())

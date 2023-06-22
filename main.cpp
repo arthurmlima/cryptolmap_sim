@@ -113,7 +113,7 @@ uint8_t* cipherxor(uint8_t* permuted_image, uint8_t* precipher)
 uint8_t* permutation(perm_prec* v)
 {
        str* to_ord = (str *)malloc(BSIZE * sizeof(str));                   // Allocate memory for the array
-       int* sorted_index =  (int *)malloc(BSIZE * sizeof(int));                   // Allocate memory for the array
+       int* sorted_index =  (int *)malloc(BSIZE * sizeof(int));            // Allocate memory for the array
 
        if (to_ord == NULL) {printf("Error! Low memory\n");}
        if (sorted_index == NULL) {printf("Error! Low memory\n");}

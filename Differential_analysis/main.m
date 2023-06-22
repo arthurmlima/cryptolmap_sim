@@ -12,7 +12,7 @@ DISCARDED_TIME = "10";
 CEXPR = '"((long long int)(v[i]*POW(10,5)))%256"';
 
 % Select image
-IMAGE = 'lake.tif';
+IMAGE = 'plane.tif';
 
 Image = imread(strcat('C:\Users\lgnar\suplogmap\Differential_analysis\Images\',IMAGE));
 [Height,Width] = size(Image);
@@ -58,8 +58,8 @@ imshow(uint8(reshape(cipher_image,Height,Width)'));
 aux_a = uint8(reshape(cipher_image,Height,Width)');
 
 % Simulation 2
-Image2 = imread(strcat('C:\Users\lgnar\suplogmap\Images\',IMAGE));
-Image2(1,11) = mod(Image2(1,11)+1,256);
+Image2 = imread(strcat('C:\Users\lgnar\suplogmap\Differential_analysis\Images\',IMAGE));
+Image2(198,174) = mod(Image2(198,174)+1,256);
 
 fid = fopen('image.h','w');
 n_pixels = Width*Height;

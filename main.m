@@ -3,7 +3,7 @@ clc
 close all
 
 % Parameters
-MU_PERM = "2024";
+MU_PERM = "128";
 MU_DIFF = "256";
 PRECISION_PERMUTATION = "FLOAT";
 PRECISION_DIFFUSION = "FLOAT";
