@@ -65,12 +65,12 @@ printf("******************************************* DEBUG **********************
     for (int i = 0; i < 32; i++)
     {
         uint8_t hd = digest[i];
-        printf("%0.2X",hd);
+        printf("%.2X",hd);
     }
      printf("\n\n");
 
     printf("Initial Condition - Permutation = %f\n",m1);
-    printf("Initial COndition - Diffusion = %f\n",m2);
+    printf("Initial Condition - Diffusion = %f\n",m2);
     printf("\nmu Permutation = %f",(diff_prec)_MU_PERM_);
     printf("\nmu Diffusion = %f\n",(perm_prec)_MU_DIFF_);
 printf("*******************************************************************************************\n");
@@ -92,7 +92,7 @@ uint8_t* lmapdc(diff_prec* v)
 
     for (int i = 0; i < BSIZE; i++)
     {
-            lmapchar[i] = _CIPHER_EXPR_;
+        lmapchar[i] = _CIPHER_EXPR_;
     }
     return lmapchar;
 }
@@ -104,7 +104,7 @@ uint8_t* cipherxor(uint8_t* permuted_image, uint8_t* precipher)
 
     for (int i = 0; i < BSIZE; i++)
     {
-           cipher_image[i] =  permuted_image[i] ^ precipher[i];
+        cipher_image[i] =  permuted_image[i] ^ precipher[i];
     }
     print_img(precipher, "Text/precipher.image");
     return cipher_image;
@@ -129,7 +129,7 @@ uint8_t* permutation(perm_prec* v)
        qsort(to_ord, BSIZE, sizeof(to_ord[0]), cmp);
        for (int i = 0; i < BSIZE; i++)
        {
-            sorted_index[i] = to_ord[i].index;
+            sorted_index[i]=to_ord[i].index;
             img[i] = image[to_ord[i].index];
        }
        print_img(sorted_index, "Text/pixel_position.image");
@@ -145,25 +145,29 @@ perm_prec* logmap_perm(int dt, perm_prec x)
     perm_prec y_at = x;
 
     perm_prec mu = (perm_prec)_MU_PERM_;
+    double dummy;
 
     for (int i = 0; i < dt; i++)
     {
-        long double logmap1 = (long double) mu * x_at * (NORM - x_at);
-        long double logmap2 = (long double) mu * y_at - mu * POW(y_at,2);
+        double logmap1 = (double) mu * x_at * (NORM - x_at);
+        double logmap2 = (double) mu * y_at - mu * POW(y_at,2);
 
-        x_at = MOD(logmap1, NULL);
-        y_at = MOD(logmap2, NULL);
+        x_at = MOD(logmap1, &dummy);
+        y_at = MOD(logmap2, &dummy);
     }
 
     for (int i = 0; i < BSIZE; i++)
     {
-        long double logmap1 = (long double) mu * x_at * (NORM - x_at);
-        long double logmap2 = (long double) mu * y_at - mu * POW(y_at,2);
+        double logmap1 = (double) mu * x_at * (NORM - x_at);
+        double logmap2 = (double) mu * y_at - mu * POW(y_at,2);
 
-        x_at = MOD(logmap1, NULL);
-        y_at = MOD(logmap2, NULL);
+        x_at = MOD(logmap1, &dummy);
+        y_at = MOD(logmap2, &dummy);
 
-        vlogmap[i] = ABS(MOD(logmap1, NULL)-MOD(logmap2, NULL));
+        if(x_at>y_at)
+            vlogmap[i]= x_at-y_at;
+        if(x_at<y_at)
+            vlogmap[i]= y_at-x_at;
     }
     return vlogmap;
 }
@@ -177,25 +181,29 @@ diff_prec* logmap_diff(int dt, diff_prec x)
     diff_prec y_at = x;
 
     diff_prec mu = (diff_prec)_MU_DIFF_;
+    double dummy;
 
     for (int i = 0; i < dt; i++)
     {
-        long double logmap1 = (long double) mu * x_at * (NORM - x_at);
-        long double logmap2 = (long double) mu * y_at - mu * POW(y_at,2);
+        double logmap1 = (double) mu * x_at * (NORM - x_at);
+        double logmap2 = (double) mu * y_at - mu * POW(y_at,2);
 
-        x_at = MOD(logmap1, NULL);
-        y_at = MOD(logmap2, NULL);
+        x_at = MOD(logmap1, &dummy);
+        y_at = MOD(logmap2, &dummy);
     }
 
     for (int i = 0; i < BSIZE; i++)
     {
-        long double logmap1 = (long double) mu * x_at * (NORM - x_at);
-        long double logmap2 = (long double) mu * y_at - mu * POW(y_at,2);
+        double logmap1 = (double) mu * x_at * (NORM - x_at);
+        double logmap2 = (double) mu * y_at - mu * POW(y_at,2);
 
-        x_at = MOD(logmap1, NULL);
-        y_at = MOD(logmap2, NULL);
+        x_at = MOD(logmap1, &dummy);
+        y_at = MOD(logmap2, &dummy);
 
-        vlogmap[i] = ABS(MOD(logmap1, NULL)-MOD(logmap2, NULL));
+        if(x_at>y_at)
+            vlogmap[i]= x_at-y_at;
+        if(x_at<y_at)
+            vlogmap[i]= y_at-x_at;
     }
     return vlogmap;
 }

@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <math.h>
 
-#include"image.h"
+#include "image.h"
 
 #ifdef FLOAT_PERM
     typedef float perm_prec;
@@ -32,11 +32,11 @@
 
 #define _CIPHER_EXPR_  CEXPR
 
-#define MOD modf
+#define MOD std::modf
 #define NORM 1.0
 #define NORM_2 2.0
-#define ABS fabs
-#define POW powf
+#define ABS std::fabs
+#define POW std::pow
 
 struct str
 {

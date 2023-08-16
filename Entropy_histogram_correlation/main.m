@@ -5,13 +5,13 @@ close all
 % Parameters
 MU_PERM = "128";
 MU_DIFF = "256";
-PRECISION_PERMUTATION = "FLOAT";
-PRECISION_DIFFUSION = "FLOAT";
+PRECISION_PERMUTATION = "DOUBLE";
+PRECISION_DIFFUSION = "DOUBLE";
 DISCARDED_TIME = "10";
 CEXPR = '"((long long int)(v[i]*POW(10,5)))%256"';
 
 % Select image
-IMAGE = 'tank.tif';
+IMAGE = 'plane.tif';
 
 Image = imread(strcat('C:\Users\lgnar\suplogmap\Entropy_histogram_correlation\Images\',IMAGE));
 [Height,Width] = size(Image);
@@ -37,12 +37,13 @@ isize = strcat(' -D','_H=',string(Height),' -D','_W=',string(Width));
 expr = strcat(" -D","CEXPR=",CEXPR);
 dt = strcat(" -D","DT=",DISCARDED_TIME);
 
-versmatlab = strcat("set path=%path:C:\Program Files\MATLAB\R", version('-release'),"\bin\win64;=% & a.exe");
-
-cmdc = strcat("g++ -DDEBUG ",prec,mu,isize,expr,dt," main.cpp -lcryptopp");
-
+cmdc = strcat("wsl g++ -DDEBUG ",prec,mu,isize,expr,dt," -o /home/lucas/aux/a.out /home/lucas/aux/main.cpp -lcryptopp");
+system("wsl cp -R /mnt/c/Users/lgnar/suplogmap/Entropy_histogram_correlation/main.cpp /home/lucas/aux/");
+system("wsl cp -R /mnt/c/Users/lgnar/suplogmap/Entropy_histogram_correlation/image.h /home/lucas/aux/");
+system("wsl cp -R /mnt/c/Users/lgnar/suplogmap/Entropy_histogram_correlation/parameters.h /home/lucas/aux/");
 system(sprintf("%s",cmdc));
-system(sprintf("%s",versmatlab));
+system("wsl cd ~/aux ; ./a.out");
+system("wsl cp -R /home/lucas/aux/Text /mnt/c/Users/lgnar/suplogmap/Entropy_histogram_correlation/");
 
 plain_image = load('Text\plain.image');
 permuted_image = load('Text\permuted.image');

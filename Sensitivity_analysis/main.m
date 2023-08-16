@@ -6,8 +6,8 @@ close all
 % Parameters
 MU_PERM = "128";
 MU_DIFF = "256";
-PRECISION_PERMUTATION = "FLOAT";
-PRECISION_DIFFUSION = "FLOAT";
+PRECISION_PERMUTATION = "DOUBLE";
+PRECISION_DIFFUSION = "DOUBLE";
 DISCARDED_TIME = "10";
 CEXPR = '"((long long int)(v[i]*POW(10,5)))%256"';
 
@@ -38,12 +38,13 @@ isize = strcat(' -D','_H=',string(Height),' -D','_W=',string(Width));
 expr = strcat(" -D","CEXPR=",CEXPR);
 dt = strcat(" -D","DT=",DISCARDED_TIME);
 
-versmatlab = strcat("set path=%path:C:\Program Files\MATLAB\R", version('-release'),"\bin\win64;=% & a.exe");
-
-cmdc = strcat("g++ -DDEBUG ",prec,mu,isize,expr,dt," main.cpp -lcryptopp");
-
+cmdc = strcat("wsl g++ -DDEBUG ",prec,mu,isize,expr,dt," -o /home/lucas/aux/a.out /home/lucas/aux/main.cpp -lcryptopp");
+system("wsl cp -R /mnt/c/Users/lgnar/suplogmap/Sensitivity_analysis/main.cpp /home/lucas/aux/");
+system("wsl cp -R /mnt/c/Users/lgnar/suplogmap/Sensitivity_analysis/image.h /home/lucas/aux/");
+system("wsl cp -R /mnt/c/Users/lgnar/suplogmap/Sensitivity_analysis/parameters.h /home/lucas/aux/");
 system(sprintf("%s",cmdc));
-system(sprintf("%s",versmatlab));
+system("wsl cd ~/aux ; ./a.out");
+system("wsl cp -R /home/lucas/aux/Text /mnt/c/Users/lgnar/suplogmap/Sensitivity_analysis/");
 
 plain_image = load('Text\plain.image');
 permuted_image = load('Text\permuted.image');
@@ -58,12 +59,13 @@ imshow(uint8(reshape(cipher_image,Height,Width)'));
 aux_a = uint8(reshape(cipher_image,Height,Width)');
 
 % Simulation 2
-versmatlab = strcat("set path=%path:C:\Program Files\MATLAB\R", version('-release'),"\bin\win64;=% & a.exe");
-
-cmdc = strcat("g++ -DDEBUG ",prec,mu,isize,expr,dt," main2.cpp -lcryptopp");
-
+cmdc = strcat("wsl g++ -DDEBUG ",prec,mu,isize,expr,dt," -o /home/lucas/aux/a.out /home/lucas/aux/main2.cpp -lcryptopp");
+system("wsl cp -R /mnt/c/Users/lgnar/suplogmap/Sensitivity_analysis/main2.cpp /home/lucas/aux/");
+system("wsl cp -R /mnt/c/Users/lgnar/suplogmap/Sensitivity_analysis/image.h /home/lucas/aux/");
+system("wsl cp -R /mnt/c/Users/lgnar/suplogmap/Sensitivity_analysis/parameters.h /home/lucas/aux/");
 system(sprintf("%s",cmdc));
-system(sprintf("%s",versmatlab));
+system("wsl cd ~/aux ; ./a.out");
+system("wsl cp -R /home/lucas/aux/Text /mnt/c/Users/lgnar/suplogmap/Sensitivity_analysis/");
 
 plain_image2 = load('Text\plain.image');
 permuted_image2 = load('Text\permuted.image');
