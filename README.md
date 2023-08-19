@@ -1,5 +1,5 @@
 ## Image Encryption Tests Documentation
-
+This description was generated using chatgpt
 ### Prerequisites
 To conduct the image encryption tests, you'll need the following:
 
@@ -10,13 +10,6 @@ To conduct the image encryption tests, you'll need the following:
 - **Test Images:** Prepare test images that will be used to evaluate the encryption algorithms. The test images should be representative of real-world scenarios.
 
 Make sure to have all the required software and resources in place before proceeding with the tests.
-
-
-### Encryption Algorithms
-[Describe the encryption algorithms here.]
-
-### Test Setup
-[Outline the test setup here.]
 
 ### Test Procedures
 
