@@ -11,6 +11,35 @@ To conduct the image encryption tests, you'll need the following:
 
 Make sure to have all the required software and resources in place before proceeding with the tests.
 
+### Compiling and running
+
+To compile the image encryption algorithm, you need a Linux-based operating system (either native Linux or the Windows Subsystem for Linux - WSL). Follow the steps below to compile and run the application:
+
+1. Install the necessary dependencies:
+
+```
+sudo apt update
+sudo apt install g++
+sudo apt install libcrypto++-dev
+```
+
+2. Go to the target test directory (i.e. Entropy, histogram and correlation test directory):
+```
+cd Entropy_histogram_correlation
+```
+3. Ensure that the `image.h` file is up to date with the updated pixel array of the plain image. The `main.m` file can be taken as an example of how to create the `image.h` file using MATLAB programing lanaguage.
+
+4. Compile the `main.cpp` source code using the following command:
+```
+g++ -DDEBUG  -DDOUBLE_DIFF -DDOUBLE_PERM -DMU_PERM=128 -DMU_DIFF=256 -D_H=512 -D_W=512 -DCEXPR="((long long int)(v[i]*POW(10,5)))%256" -DDT=10 main.cpp -lcryptopp -o output.out
+```
+
+5. Execute the generated `output.out` executable file without any arguments:
+```
+./output.out
+```
+After execution, the Text folder should be updated with the plain, cipher, and permuted images.
+
 ### Test Procedures
 
 #### Histogram, Entropy, and Correlation Tests
